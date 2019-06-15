@@ -8,7 +8,7 @@ namespace LiffAppOnBlazor
     public enum ViewType
     {
         Compact,
-        Tail,
+        Tall,
         Full
     }
 }
