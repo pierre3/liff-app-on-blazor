@@ -9,5 +9,6 @@ namespace LiffAppOnBlazor
     {
         public string Language { get; set; }
         public LiffContext Context { get; set; }
+        public LiffData(){}
     }
 }

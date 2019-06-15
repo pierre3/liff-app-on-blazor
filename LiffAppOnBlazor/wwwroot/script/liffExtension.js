@@ -2,10 +2,10 @@
     init: function (context) {
         liff.init(
             function (data) {
-                context.invokeMethod('LiffInitSuccess', JSON.stringify(data));
+                context.invokeMethod('LiffInitSuccess', data);
             },
             function (error) {
-                context.invokeMethod('LiffInitError', JSON.stringify(error));
+                context.invokeMethod('LiffInitError', { code: error.code, message: error.message, stack: error.stack });
             }
         );
     }

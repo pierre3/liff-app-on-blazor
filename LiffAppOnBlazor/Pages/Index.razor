@@ -30,9 +30,10 @@
 
 
     [JSInvokable]
-    public void LiffInitSuccess(string data)
+    public void LiffInitSuccess(LiffData data)
     {
         Status = $"Success: {data}";
+        Data = data;
     }
 
     [JSInvokable]
