@@ -1,0 +1,41 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+    <div class="card" style="width: 18rem;">
+        <ul class="list-group">
+            <li class="list-group-item">Language: @Data?.Language</li>
+            <li class="list-group-item">Type: @Data?.Context.Type</li>
+            <li class="list-group-item">ViewType: @Data?.Context.ViewType</li>
+            <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+            <li class="list-group-item">UserId: @Data?.Context.UserId</li>
+            <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+            <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+        </ul>
+    </div>
+
+@functions{
+    LiffData Data;
+
+    protected override Task OnInitAsync()
+    {
+        return LiffInit();
+    }
+
+    protected async Task LiffInit()
+    {
+        await JSRuntime.InvokeAsync<object>("liffExt.init", new DotNetObjectRef(this));
+    }
+
+
+    [JSInvokable]
+    public void LiffInitSuccess(LiffData data)
+    {
+        Data = data;
+    }
+
+    [JSInvokable]
+    public void LiffInitError(object error)
+    {
+        Console.WriteLine(error);
+    }
+}
