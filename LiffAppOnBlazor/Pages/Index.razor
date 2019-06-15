@@ -32,15 +32,7 @@
     [JSInvokable]
     public void LiffInitSuccess(string data)
     {
-        var liffData = JsonConvert.DeserializeObject<LiffData>(data, new JsonSerializerSettings()
-        {
-            ContractResolver = new DefaultContractResolver()
-            {
-                NamingStrategy = new CamelCaseNamingStrategy()
-            }
-        });
         Status = $"Success: {data}";
-        Data = liffData;
     }
 
     [JSInvokable]
