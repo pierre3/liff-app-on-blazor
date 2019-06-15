@@ -6,17 +6,26 @@
         <li class="list-group-item">Language: @Data?.Language</li>
         <li class="list-group-item">Type: @Data?.Context.Type</li>
         <li class="list-group-item">ViewType: @Data?.Context.ViewType</li>
-        <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
         <li class="list-group-item">UserId: @Data?.Context.UserId</li>
-        <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
-        <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+        @if (@Data?.Context.Type == ContextType.Utou)
+        {
+            <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+        }
+        else if (@Data?.Context.Type == ContextType.Room)
+        {
+            <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+        }
+        else
+        {
+            <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+        }
     </ul>
 </div>
-<p>Status: @Status</p>
+<p>@Error</p>
 
 @functions{
     LiffData Data;
-    string Status;
+    string Error;
 
     protected override Task OnInitAsync()
     {
@@ -30,25 +39,22 @@
 
 
     [JSInvokable]
-    public void LiffInitSuccess(LiffData data)
+    public void LiffInitSuccess(string data)
     {
-        Status = $"Success: {data}";
-        Data = data;
-        //try
-        //{
-        //    var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
-        //    Data = liffData;
-        //}
-        //catch (Exception e)
-        //{
-        //    Status = e.ToString();
-        //}
+        try
+        {
+            var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
+            Data = liffData;
+        }
+        catch (Exception e)
+        {
+            Error = e.ToString();
+        }
     }
 
     [JSInvokable]
     public void LiffInitError(string error)
     {
-        Status = $"Error {error}";
-        Console.WriteLine(error);
+        Error = $"Error {error}";
     }
 }

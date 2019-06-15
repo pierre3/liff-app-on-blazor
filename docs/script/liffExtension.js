@@ -2,7 +2,7 @@
     init: function (context) {
         liff.init(
             function (data) {
-                context.invokeMethod('LiffInitSuccess', data);
+                context.invokeMethod('LiffInitSuccess', JSON.stringify(data));
             },
             function (error) {
 
