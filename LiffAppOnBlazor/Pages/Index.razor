@@ -30,14 +30,21 @@
 
 
     [JSInvokable]
-    public void LiffInitSuccess(LiffData data)
+    public void LiffInitSuccess(string data)
     {
+        var liffData = JsonConvert.DeserializeObject<LiffData>(data, new JsonSerializerSettings()
+        {
+            ContractResolver = new DefaultContractResolver()
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        });
         Status = $"Success: {data}";
-        Data = data;
+        Data = liffData;
     }
 
     [JSInvokable]
-    public void LiffInitError(object error)
+    public void LiffInitError(string error)
     {
         Status = $"Error {error}";
         Console.WriteLine(error);
