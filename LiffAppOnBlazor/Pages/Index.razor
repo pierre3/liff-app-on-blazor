@@ -15,7 +15,7 @@
         {
             <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
         }
-        else
+        else if (@Data?.Context.Type == ContextType.Group)
         {
             <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
         }
