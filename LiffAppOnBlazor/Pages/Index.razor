@@ -30,18 +30,18 @@
 
 
     [JSInvokable]
-    public void LiffInitSuccess(string data)
+    public void LiffInitSuccess(LiffData data)
     {
         Status = $"Success: {data}";
-        try
-        {
-            var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
-            Data = liffData;
-        }
-        catch (Exception e)
-        {
-            Status = e.ToString();
-        }
+        //try
+        //{
+        //    var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
+        //    Data = liffData;
+        //}
+        //catch (Exception e)
+        //{
+        //    Status = e.ToString();
+        //}
     }
 
     [JSInvokable]
