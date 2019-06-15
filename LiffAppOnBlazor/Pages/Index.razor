@@ -1,18 +1,18 @@
 ﻿@page "/"
 @inject IJSRuntime JSRuntime
 
-    <div class="card" style="width: 18rem;">
-        <ul class="list-group">
-            <li class="list-group-item">Language: @Data?.Language</li>
-            <li class="list-group-item">Type: @Data?.Context.Type</li>
-            <li class="list-group-item">ViewType: @Data?.Context.ViewType</li>
-            <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
-            <li class="list-group-item">UserId: @Data?.Context.UserId</li>
-            <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
-            <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
-        </ul>
-    </div>
-    <p>Status: @Status</p>
+<div class="card" style="width: 18rem;">
+    <ul class="list-group">
+        <li class="list-group-item">Language: @Data?.Language</li>
+        <li class="list-group-item">Type: @Data?.Context.Type</li>
+        <li class="list-group-item">ViewType: @Data?.Context.ViewType</li>
+        <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+        <li class="list-group-item">UserId: @Data?.Context.UserId</li>
+        <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+        <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+    </ul>
+</div>
+<p>Status: @Status</p>
 
 @functions{
     LiffData Data;
@@ -35,15 +35,10 @@
         Status = $"Success: {data}";
         try
         {
-            var liffData = JsonConvert.DeserializeObject<LiffData>(data, new JsonSerializerSettings()
-            {
-                ContractResolver = new DefaultContractResolver()
-                {
-                    NamingStrategy = new CamelCaseNamingStrategy()
-                }
-            });
+            var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
             Data = liffData;
-        }catch(Exception e)
+        }
+        catch (Exception e)
         {
             Status = e.ToString();
         }
