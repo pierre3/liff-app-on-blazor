@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LiffAppOnBlazor
+namespace LiffSdk.Blazor.Data
 {
     [JsonObject( NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class LiffData

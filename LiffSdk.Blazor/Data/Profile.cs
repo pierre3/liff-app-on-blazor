@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace LiffAppOnBlazor
+namespace LiffSdk.Blazor.Data
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class Profile

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiffAppOnBlazor", "LiffAppOnBlazor\LiffAppOnBlazor.csproj", "{9E904ED9-7D22-44E9-9C54-899835DF983F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiffAppOnBlazor", "LiffAppOnBlazor\LiffAppOnBlazor.csproj", "{9E904ED9-7D22-44E9-9C54-899835DF983F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiffSdk.Blazor", "LiffSdk.Blazor\LiffSdk.Blazor.csproj", "{09159DA4-8F4F-485E-8D35-C61EB7AB01D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9E904ED9-7D22-44E9-9C54-899835DF983F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E904ED9-7D22-44E9-9C54-899835DF983F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E904ED9-7D22-44E9-9C54-899835DF983F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09159DA4-8F4F-485E-8D35-C61EB7AB01D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09159DA4-8F4F-485E-8D35-C61EB7AB01D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09159DA4-8F4F-485E-8D35-C61EB7AB01D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09159DA4-8F4F-485E-8D35-C61EB7AB01D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

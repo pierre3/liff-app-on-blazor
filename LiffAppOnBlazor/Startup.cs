@@ -1,3 +1,4 @@
+using LiffSdk.Blazor;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,6 +8,7 @@ namespace LiffAppOnBlazor
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<LiffClient>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
