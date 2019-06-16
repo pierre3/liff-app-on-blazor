@@ -2,6 +2,11 @@
 @inject IJSRuntime JSRuntime
 
 <div class="card" style="width: 18rem;">
+    <img class="card-img" src="@Profile?.PictureUrl" />
+    <div class="card-body">
+        <div class="card-title">@Profile?.DisplayName</div>
+        <div class="card-text">@Profile?.StatusMessage</div>
+    </div>
     <ul class="list-group">
         <li class="list-group-item">Language: @Data?.Language</li>
         <li class="list-group-item">Type: @Data?.Context.Type</li>
@@ -24,19 +29,25 @@
 <p>@Error</p>
 
 @functions{
-    LiffData Data;
-    string Error;
+    protected LiffData Data { get; set; }
+    protected string Error { get; set; }
+    protected Profile Profile { get; set; }
 
-    protected override Task OnInitAsync()
+    protected override async Task OnInitAsync()
     {
-        return LiffInit();
+        await Init();
+        await GetProfile();
     }
 
-    protected async Task LiffInit()
+    protected async Task Init()
     {
         await JSRuntime.InvokeAsync<object>("liffExt.init", new DotNetObjectRef(this));
     }
 
+    protected async Task GetProfile()
+    {
+        Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+    }
 
     [JSInvokable]
     public void LiffInitSuccess(string data)
