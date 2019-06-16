@@ -24,11 +24,10 @@ namespace LiffSdk.Blazor
 
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
-            if (!Initialized)
-            {
+            
                 JSRuntime = jSRuntime;
                 await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
-            }
+                
         }
 
         public Task<Profile> GetProfileAsync()
@@ -52,13 +51,12 @@ namespace LiffSdk.Blazor
         }
 
         [JSInvokable]
-        public async Task LiffInitSuccess(string data)
+        public void LiffInitSuccess(string data)
         {
             try
             {
                 Data = JsonConvert.DeserializeObject<LiffData>(data);
-                Profile = await GetProfileAsync();
-                Initialized = true;
+                Profile = GetProfileAsync().Result;
             }
             catch (Exception e)
             {
