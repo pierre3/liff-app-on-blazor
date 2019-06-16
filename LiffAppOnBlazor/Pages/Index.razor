@@ -1,11 +1,11 @@
 ﻿@page "/"
 @inject IJSRuntime JSRuntime
 
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 20rem;">
     <img class="card-img" src="@Profile?.PictureUrl" />
     <div class="card-body">
-        <div class="card-title">@Profile?.DisplayName</div>
-        <div class="card-text">@Profile?.StatusMessage</div>
+        <h5 class="card-title">@Profile?.DisplayName</h5>
+        <p class="card-text">@Profile?.StatusMessage</p>
     </div>
     <ul class="list-group">
         <li class="list-group-item">Language: @Data?.Language</li>
@@ -50,17 +50,9 @@
     }
 
     [JSInvokable]
-    public void LiffInitSuccess(string data)
+    public void LiffInitSuccess(LiffData data)
     {
-        try
-        {
-            var liffData = JsonConvert.DeserializeObject<LiffData>(data, new CamelCaseJsonSerializerSettings());
-            Data = liffData;
-        }
-        catch (Exception e)
-        {
-            Error = e.ToString();
-        }
+        Data= data;
     }
 
     [JSInvokable]
