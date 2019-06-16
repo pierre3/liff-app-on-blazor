@@ -50,9 +50,17 @@
     }
 
     [JSInvokable]
-    public void LiffInitSuccess(LiffData data)
+    public void LiffInitSuccess(string data)
     {
-        Data= data;
+        try
+        {
+            var liffData = JsonConvert.DeserializeObject<LiffData>(data);
+            Data = liffData;
+        }
+        catch (Exception e)
+        {
+            Error = e.ToString();
+        }
     }
 
     [JSInvokable]
