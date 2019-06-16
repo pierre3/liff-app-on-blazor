@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject LiffClient LiffClient
+@inject IJSRuntime JSRuntime
 
 <div class="card" style="width: 20rem;">
     <img class="card-img" src="@LiffClient?.Profile?.PictureUrl" />
@@ -14,16 +15,26 @@
         <li class="list-group-item">UserId: @LiffClient?.Data?.Context.UserId</li>
         @if (@LiffClient?.Data?.Context.Type == ContextType.Utou)
         {
-            <li class="list-group-item">UtouId: @LiffClient?.Data?.Context.UtouId</li>
+        <li class="list-group-item">UtouId: @LiffClient?.Data?.Context.UtouId</li>
         }
         else if (@LiffClient?.Data?.Context.Type == ContextType.Room)
         {
-            <li class="list-group-item">RoomId: @LiffClient?.Data?.Context.RoomId</li>
+        <li class="list-group-item">RoomId: @LiffClient?.Data?.Context.RoomId</li>
         }
         else if (@LiffClient?.Data?.Context.Type == ContextType.Group)
         {
-            <li class="list-group-item">GroupId: @LiffClient?.Data?.Context.GroupId</li>
+        <li class="list-group-item">GroupId: @LiffClient?.Data?.Context.GroupId</li>
         }
     </ul>
 </div>
 <p>@LiffClient?.Error</p>
+
+
+@functions{
+
+    protected override Task OnInitAsync()
+    {
+        return LiffClient.InitializeAsync(JSRuntime);
+    }
+}
+
