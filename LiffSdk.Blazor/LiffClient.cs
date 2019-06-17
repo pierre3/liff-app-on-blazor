@@ -39,7 +39,7 @@ namespace LiffSdk.Blazor
 
         public async Task SendMessagesAsync(string text)
         {
-            await JSRuntime.InvokeAsync<object>("liff.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
+            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
         }
 
         public async Task OpenWindow(string url, bool external)

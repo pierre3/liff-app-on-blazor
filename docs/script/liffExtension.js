@@ -12,5 +12,8 @@
                 }));
             }
         );
+    },
+    sendMessages: function (messages) {
+        liff.sendMessages(messages);
     }
 };
