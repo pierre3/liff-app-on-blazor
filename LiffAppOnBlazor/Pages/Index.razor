@@ -3,11 +3,20 @@
 @inject IJSRuntime JSRuntime
 
 <div class="card" style="width: 20rem;">
-    <img class="card-img" src="@Data?.Profile?.PictureUrl" />
-    <div class="card-body">
-        <h5 class="card-title">@Data?.Profile?.DisplayName</h5>
-        <p class="card-text">@Data?.Profile?.StatusMessage</p>
-    </div>
+    @if (Profile != null)
+    {
+        <img class="card-img" src="@Profile?.PictureUrl" />
+        <div class="card-body">
+            <h5 class="card-title">@Profile?.DisplayName</h5>
+            <p class="card-text">@Profile?.StatusMessage</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <button class="btn btn-info" onclick="@LoadProfileAsync">プロファイル読み込み</button>
+        </div>
+    }
     <ul class="list-group">
         <li class="list-group-item">Language: @Data?.Language</li>
         <li class="list-group-item">Type: @Data?.Context.Type</li>
@@ -15,15 +24,15 @@
         <li class="list-group-item">UserId: @Data?.Context.UserId</li>
         @if (@Data?.Context.Type == ContextType.Utou)
         {
-        <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+            <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
         }
         else if (@Data?.Context.Type == ContextType.Room)
         {
-        <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+            <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
         }
         else if (@Data?.Context.Type == ContextType.Group)
         {
-        <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+            <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
         }
     </ul>
 </div>
@@ -31,11 +40,19 @@
 
 
 @functions{
-    LiffData Data {get;set;}
-    protected override async Task OnInitAsync()
+    LiffData Data { get; set; }
+    Profile Profile { get; set; }
+
+    protected async override Task OnInitAsync()
     {
         await LiffClient.InitializeAsync(JSRuntime);
         Data = LiffClient?.Data;
+        Profile = LiffClient?.Profile;
+    }
+
+    private async void LoadProfileAsync()
+    {
+        await LiffClient.LoadProfileAsync();
+        Profile = LiffClient?.Profile;
     }
 }
-

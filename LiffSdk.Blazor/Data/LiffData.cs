@@ -13,8 +13,6 @@ namespace LiffSdk.Blazor.Data
         public string Language { get; set; }
         public LiffContext Context { get; set; }
 
-        public Profile Profile { get; set; }
-
         public LiffData(){}
     }
 }

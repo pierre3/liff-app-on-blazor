@@ -18,7 +18,7 @@
 </div>
 
 @functions{
-    protected override Task OnAfterRenderAsync()
+    protected override Task OnInitAsync()
     {
         return LiffClient.InitializeAsync(JSRuntime);
     }

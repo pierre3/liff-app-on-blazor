@@ -15,6 +15,8 @@ namespace LiffSdk.Blazor
 
         public LiffData Data { get; protected set; }
 
+        public Profile Profile { get; set; }
+
         public string Error { get; protected set; }
 
         public LiffClient()
@@ -26,13 +28,13 @@ namespace LiffSdk.Blazor
             {
                 JSRuntime = jSRuntime;
                 await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
-                Initialized = (Data?.Profile != null);
+                Initialized = Data != null;
             }
         }
 
-        public Task<Profile> GetProfileAsync()
+        public async Task LoadProfileAsync()
         {
-            return JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+             Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
         }
 
         public async Task SendMessagesAsync(string text)
