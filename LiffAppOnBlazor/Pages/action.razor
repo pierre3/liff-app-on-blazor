@@ -1,17 +1,17 @@
 ﻿@page "/action"
 @inject LiffClient LiffClient
 
-<input class="form-control" type="text" bind="@message" placeholder="送信メッセージを入力してください。" />
+<input class="form-control" type="text" bind="@Message" placeholder="送信メッセージを入力してください。" />
 <button class="btn btn-primary" onclick="@SendButtonClickAsync">送信</button>
 
 @functions{
-    string message = "";
+    string Message {get; set;}
 
     private async void SendButtonClickAsync()
     {
-        if (!string.IsNullOrEmpty(message))
+        if (!string.IsNullOrEmpty(Message))
         {
-            await LiffClient.SendMessagesAsync(message);
+            await LiffClient.SendMessagesAsync(Message);
         }
     }
 }
