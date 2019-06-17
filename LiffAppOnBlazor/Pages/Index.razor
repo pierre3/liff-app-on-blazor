@@ -32,7 +32,7 @@
 
 @functions{
 
-    protected override Task OnInitAsync()
+    protected override Task OnAfterRenderAsync()
     {
         return LiffClient.InitializeAsync(JSRuntime);
     }
