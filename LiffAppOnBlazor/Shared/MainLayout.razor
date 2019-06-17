@@ -1,4 +1,6 @@
 @inherits LayoutComponentBase
+@inject LiffClient LiffClient
+@inject IJSRuntime JSRuntime
 
 
 <div class="sidebar">
@@ -15,3 +17,9 @@
     </div>
 </div>
 
+@functions{
+    protected override Task OnAfterRenderAsync()
+    {
+        return LiffClient.InitializeAsync(JSRuntime);
+    }
+}
