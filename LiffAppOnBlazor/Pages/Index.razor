@@ -30,5 +30,10 @@
 <p>@LiffClient?.Error</p>
 
 
-
+@functions{
+    protected override Task OnAfterRenderAsync()
+    {
+        return LiffClient.InitializeAsync(JSRuntime);
+    }
+}
 
