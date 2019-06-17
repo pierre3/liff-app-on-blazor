@@ -15,8 +15,6 @@ namespace LiffSdk.Blazor
 
         public LiffData Data { get; protected set; }
 
-        public Profile Profile { get; protected set; }
-
         public string Error { get; protected set; }
 
         public LiffClient()
@@ -56,7 +54,6 @@ namespace LiffSdk.Blazor
             try
             {
                 Data = JsonConvert.DeserializeObject<LiffData>(data);
-                Profile = GetProfileAsync().Result;
             }
             catch (Exception e)
             {

@@ -2,7 +2,12 @@
     init: function (context) {
         liff.init(
             function (data) {
-                context.invokeMethod('LiffInitSuccess', JSON.stringify(data));
+                liff.getProfile().then(profile =>
+                {
+                    data.profile = profile;
+                    context.invokeMethod('LiffInitSuccess', JSON.stringify(data));
+                });
+                
             },
             function (error) {
 

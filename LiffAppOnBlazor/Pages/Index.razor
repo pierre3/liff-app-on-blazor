@@ -3,10 +3,10 @@
 @inject IJSRuntime JSRuntime
 
 <div class="card" style="width: 20rem;">
-    <img class="card-img" src="@LiffClient?.Profile?.PictureUrl" />
+    <img class="card-img" src="@LiffClient?.Data?.Profile?.PictureUrl" />
     <div class="card-body">
-        <h5 class="card-title">@LiffClient?.Profile?.DisplayName</h5>
-        <p class="card-text">@LiffClient?.Profile?.StatusMessage</p>
+        <h5 class="card-title">@LiffClient?.Data?.Profile?.DisplayName</h5>
+        <p class="card-text">@LiffClient?.Data?.Profile?.StatusMessage</p>
     </div>
     <ul class="list-group">
         <li class="list-group-item">Language: @LiffClient?.Data?.Language</li>
