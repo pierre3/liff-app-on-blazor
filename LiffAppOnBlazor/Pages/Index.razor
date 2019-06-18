@@ -40,15 +40,13 @@
 
 
 @functions{ 
-    protected override Task OnAfterRenderAsync()
+    protected override async Task OnAfterRenderAsync()
     {
-        this.StateHasChanged();
-        return Task.CompletedTask;
+        await LiffClient.LoadProfileAsync();
     }
 
     private async void LoadProfileAsync()
     {
         await LiffClient.LoadProfileAsync();
-        this.StateHasChanged();
     }
 }
