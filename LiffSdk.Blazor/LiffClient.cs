@@ -4,6 +4,7 @@ using System;
 using LiffSdk.Blazor.Data;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace LiffSdk.Blazor
 {
@@ -28,12 +29,12 @@ namespace LiffSdk.Blazor
 
         public async Task LoadProfileAsync()
         {
-             Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+            Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
         }
 
         public async Task SendMessagesAsync(string text)
         {
-            await JSRuntime.InvokeAsync<object>("liff.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
+            await JSRuntime.InvokeAsync<object>("liff.sendMessages", new List<object>() { new { type = "text", text } });
         }
 
         public async Task OpenWindow(string url, bool external)

@@ -1,6 +1,5 @@
 ﻿@page "/action"
 @inject LiffClient LiffClient
-@inject  IJSRuntime JSRuntime
 
 <input class="form-control" type="text" bind="@Message" placeholder="送信メッセージを入力してください。" />
 <button class="btn btn-primary" onclick="@SendMessageAsync">送信</button>
@@ -19,10 +18,5 @@
             await LiffClient.SendMessagesAsync("Empty");
         }
     }
-    
-     protected override Task OnAfterRenderAsync()
-     {
-         return LiffClient.InitializeAsync(JSRuntime);
-     }
     
 }
