@@ -43,11 +43,10 @@
     LiffData Data { get; set; }
     Profile Profile { get; set; }
 
-    protected async override Task OnInitAsync()
-    {
+    protected override async Task OnAfterRenderAsync()
+    { 
         await LiffClient.InitializeAsync(JSRuntime);
         Data = LiffClient?.Data;
-        Profile = LiffClient?.Profile;
     }
 
     private async void LoadProfileAsync()

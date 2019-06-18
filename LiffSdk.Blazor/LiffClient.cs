@@ -9,8 +9,6 @@ namespace LiffSdk.Blazor
 {
     public class LiffClient
     {
-
-        protected bool Initialized;
         protected IJSRuntime JSRuntime { get; set; }
 
         public LiffData Data { get; protected set; }
@@ -24,12 +22,8 @@ namespace LiffSdk.Blazor
 
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
-            if (!Initialized)
-            {
-                JSRuntime = jSRuntime;
-                await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
-                Initialized = Data != null;
-            }
+            JSRuntime = jSRuntime;
+            await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
         }
 
         public async Task LoadProfileAsync()
@@ -39,7 +33,7 @@ namespace LiffSdk.Blazor
 
         public async Task SendMessagesAsync(string text)
         {
-            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
+            await JSRuntime.InvokeAsync<object>("liff.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
         }
 
         public async Task OpenWindow(string url, bool external)
