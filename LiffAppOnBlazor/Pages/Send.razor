@@ -12,11 +12,11 @@
         if (!string.IsNullOrEmpty(Message))
         {
             await LiffClient.SendMessagesAsync(Message);
+            Message = "";
         }
         else
         {
-            Console.WriteLine("MSG" + Message);
-            await LiffClient.SendMessagesAsync("Empty");
+            await LiffClient.SendMessagesAsync("Empty!");
         }
     }
     
