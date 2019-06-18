@@ -43,7 +43,7 @@
     LiffData Data { get; set; }
     Profile Profile { get; set; }
 
-    protected override Task OnAfterRenderAsync()
+    protected override Task OnParametersSetAsync()
     {
         Data = LiffClient?.Data;
         Profile = LiffClient?.Profile;

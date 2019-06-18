@@ -1,7 +1,7 @@
 ﻿@page "/send"
 @inject LiffClient LiffClient
 
-<input type="text" @bind="@Message" />
+<input class="form-control" type="text" @bind="@Message" placeholder="送信メッセージを入力してください。" />
 <button class="btn btn-primary" onclick="@SendMessageAsync">送信</button>
 
 @functions{
