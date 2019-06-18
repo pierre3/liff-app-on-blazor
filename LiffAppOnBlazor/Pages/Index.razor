@@ -39,7 +39,13 @@
 <p>@LiffClient?.Error</p>
 
 
-@functions{
+@functions{ 
+    protected override Task OnAfterRenderAsync()
+    {
+        this.StateHasChanged();
+        return Task.CompletedTask;
+    }
+
     private async void LoadProfileAsync()
     {
         await LiffClient.LoadProfileAsync();
