@@ -75,7 +75,7 @@ namespace LiffSdk.Blazor
         {
             try
             {
-                Profile = await JSRuntime.InvokeAsync<Profile>("liffInterop");
+                Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
                 GetProfileSuccess?.Invoke(this, new GetProfileSuccessEventArgs(Profile));
 
             }
@@ -88,7 +88,7 @@ namespace LiffSdk.Blazor
 
         public async Task SendMessagesAsync(string messages)
         {
-            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", messages);
+            await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
         }
 
         public async Task OpenWindow(string url, bool external)
