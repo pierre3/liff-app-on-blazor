@@ -1,0 +1,23 @@
+﻿@page "/send"
+@inject LiffClient LiffClient
+
+<input class="form-control" type="text" @bind="@Message" placeholder="送信メッセージを入力してください。" />
+<button class="btn btn-primary" onclick="@SendMessageAsync">送信</button>
+
+@functions{
+    private string Message {get; set;}
+
+    private async void SendMessageAsync()
+    {
+        if (!string.IsNullOrEmpty(Message))
+        {
+            await LiffClient.SendMessagesAsync(Message);
+            Message = "";
+        }
+        else
+        {
+            await LiffClient.SendMessagesAsync("Empty!");
+        }
+    }
+    
+}

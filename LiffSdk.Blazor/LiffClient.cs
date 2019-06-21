@@ -31,12 +31,8 @@ namespace LiffSdk.Blazor
 
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
-            if (!Initialized)
-            {
-                JSRuntime = jSRuntime;
-                await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
-                Initialized = Data != null;
-            }
+            JSRuntime = jSRuntime;
+            await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
         }
 
         public async Task LoadProfileAsync()
