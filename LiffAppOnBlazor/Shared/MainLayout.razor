@@ -23,11 +23,20 @@
     {
         LiffClient.InitSuccess += async (_, data) =>
         {
+            StateHasChanged();
             await LiffClient.LoadProfileAsync();
         };
         LiffClient.InitError += async (_, error) =>
         {
-            await JSRuntime.InvokeAsync<object>("showAlert", error);
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", error);
+        };
+        LiffClient.GetProfileSuccess += async (_, error) =>
+        {
+            StateHasChanged();
+        };
+        LiffClient.GetProfileError += async (_, error) =>
+        {
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", error);
         };
         await LiffClient.InitializeAsync(JSRuntime);
     }

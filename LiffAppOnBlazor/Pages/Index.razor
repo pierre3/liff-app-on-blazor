@@ -40,11 +40,6 @@
 
 
 @functions{ 
-    protected override async Task OnAfterRenderAsync()
-    {
-        await LiffClient.LoadProfileAsync();
-    }
-
     private async void LoadProfileAsync()
     {
         await LiffClient.LoadProfileAsync();

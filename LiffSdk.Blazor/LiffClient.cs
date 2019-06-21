@@ -4,7 +4,6 @@ using System;
 using LiffSdk.Blazor.Data;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Line.Messaging;
 using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
@@ -23,32 +22,36 @@ namespace LiffSdk.Blazor
         public string Error { get; protected set; }
 
         public event EventHandler<string> InitSuccess;
-
         public event EventHandler<string> InitError;
+        public event EventHandler<string> GetProfileSuccess;
+        public event EventHandler<string> GetProfileError;
 
         public LiffClient()
         { }
 
+        public void Reset()
+        {
+            Data = null;
+            Profile = null;
+            Error = null;
+            Initialized = false;
+        }
+
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
-            await JSRuntime.InvokeAsync<object>("liffExt.init", DotNetObjectRef.Create(this));
+            if (Initialized) { return; }
+            await JSRuntime.InvokeAsync<object>("liffInterop.init", DotNetObjectRef.Create(this));
         }
 
         public async Task LoadProfileAsync()
         {
-            Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+            Profile = await JSRuntime.InvokeAsync<Profile>("liffInterop.getProfile", DotNetObjectRef.Create(this));
         }
 
-        public async Task SendMessagesAsync(IList<ISendMessage> messages)
+        public async Task SendMessagesAsync(string messages)
         {
-            var settings = new JsonSerializerSettings()
-            {
-                ContractResolver = new DefaultContractResolver() { NamingStrategy = new CamelCaseNamingStrategy() }
-            };
-            settings.Converters.Add(new StringEnumConverter() { NamingStrategy = new CamelCaseNamingStrategy() });
-            var json = JsonConvert.SerializeObject(messages, settings);
-            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", json);
+            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", messages);
         }
 
         public async Task OpenWindow(string url, bool external)
@@ -72,6 +75,7 @@ namespace LiffSdk.Blazor
             {
                 Error = e.ToString();
             }
+            Initialized = true;
             InitSuccess?.Invoke(this, data);
         }
 
@@ -80,6 +84,27 @@ namespace LiffSdk.Blazor
         {
             Error = error;
             InitError?.Invoke(this, error);
+        }
+
+        [JSInvokable]
+        protected void OnGetProfileSuccess(string data)
+        {
+            try
+            {
+                Profile = JsonConvert.DeserializeObject<Profile>(data);
+            }
+            catch (Exception e)
+            {
+                Error = e.ToString();
+            }
+            GetProfileSuccess?.Invoke(this, data);
+        }
+
+        [JSInvokable]
+        protected void OnGetProfileError(string error)
+        {
+            Error = error;
+            GetProfileError?.Invoke(this, error);
         }
     }
 }

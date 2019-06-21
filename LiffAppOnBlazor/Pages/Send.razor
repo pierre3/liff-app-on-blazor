@@ -5,13 +5,13 @@
 <button class="btn btn-primary" onclick="@SendMessageAsync">送信</button>
 
 @functions{
-    private string Message {get; set;}
+    private string Message { get; set; }
 
     private async void SendMessageAsync()
     {
         if (!string.IsNullOrEmpty(Message))
         {
-            await LiffClient.SendMessagesAsync(Message);
+            await LiffClient.SendMessagesAsync($"[{{ \"type\":\"text\", \"text\":\"{Message}\" }}]");
             Message = "";
         }
         else
@@ -19,5 +19,5 @@
             await LiffClient.SendMessagesAsync("Empty!");
         }
     }
-    
+
 }
