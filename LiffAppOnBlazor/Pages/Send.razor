@@ -1,5 +1,5 @@
 ﻿@page "/send"
-@inject LiffClient LiffClient
+@inject Liff Liff
 @inject IJSRuntime JSRuntime
 
 <input class="form-control" type="text" @bind="@Message" placeholder="送信メッセージを入力してください。" />
@@ -14,7 +14,7 @@
         if (!string.IsNullOrEmpty(Message))
         {
             try {
-                await LiffClient.SendMessagesAsync(new[] { new { type = "text", text = Message } });
+                await Liff.SendMessagesAsync(new[] { new { type = "text", text = Message } });
                 Message = "";
             } catch(Exception e)
             {

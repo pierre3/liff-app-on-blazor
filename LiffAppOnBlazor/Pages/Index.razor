@@ -1,14 +1,14 @@
 ﻿@page "/"
-@inject LiffClient LiffClient
+@inject Liff Liff
 @inject IJSRuntime JSRuntime
 
 <div class="card" style="width: 20rem;">
-    @if (Profile != null)
+    @if (Liff.Profile != null)
     {
-    <img class="card-img" src="@Profile?.PictureUrl" />
+    <img class="card-img" src="@Liff.Profile?.PictureUrl" />
     <div class="card-body">
-        <h5 class="card-title">@Profile?.DisplayName</h5>
-        <p class="card-text">@Profile?.StatusMessage</p>
+        <h5 class="card-title">@Liff.Profile?.DisplayName</h5>
+        <p class="card-text">@Liff.Profile?.StatusMessage</p>
     </div>
     }
     else
@@ -18,53 +18,52 @@
     </div>
     }
     <ul class="list-group">
-        <li class="list-group-item">Language: @Data?.Language</li>
-        <li class="list-group-item">Type: @Data?.Context.Type</li>
-        <li class="list-group-item">ViewType: @Data?.Context.ViewType</li>
-        <li class="list-group-item">UserId: @Data?.Context.UserId</li>
-        @if (@Data?.Context.Type == ContextType.Utou)
+        <li class="list-group-item">Language: @Liff.Data?.Language</li>
+        <li class="list-group-item">Type: @Liff.Data?.Context.Type</li>
+        <li class="list-group-item">ViewType: @Liff.Data?.Context.ViewType</li>
+        <li class="list-group-item">UserId: @Liff.Data?.Context.UserId</li>
+        @if (@Liff.Data?.Context.Type == ContextType.Utou)
         {
-        <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+        <li class="list-group-item">UtouId: @Liff.Data?.Context.UtouId</li>
         }
-        else if (@Data?.Context.Type == ContextType.Room)
+        else if (@Liff.Data?.Context.Type == ContextType.Room)
         {
-        <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+        <li class="list-group-item">RoomId: @Liff.Data?.Context.RoomId</li>
         }
-        else if (@Data?.Context.Type == ContextType.Group)
+        else if (@Liff.Data?.Context.Type == ContextType.Group)
         {
-        <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+        <li class="list-group-item">GroupId: @Liff.Data?.Context.GroupId</li>
         }
     </ul>
 </div>
 
 @functions{
-    LiffData Data { get; set; }
-    Profile Profile { get; set; }
 
-    protected override async Task OnAfterRenderAsync()
+    protected override void OnInit()
     {
-        LiffClient.InitSuccess += async (_, __) =>{
+        Liff.InitSuccess += async (_, __) =>{
             await LoadProfileAsync();
         };
         
-        LiffClient.InitError += async (_, args) =>
+        Liff.InitError += async (_, args) =>
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
+    }
 
-        await LiffClient.InitializeAsync(JSRuntime);
+    protected override async Task OnAfterRenderAsync()
+    {
+        await Liff.InitializeAsync(JSRuntime);
     }
 
     private async Task LoadProfileAsync()
     {
         try
         {
-            await LiffClient.LoadProfileAsync();
+            await Liff.LoadProfileAsync();
         }
         catch (Exception e)
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
         }
-        Data = LiffClient?.Data;
-        Profile = LiffClient?.Profile;
         StateHasChanged();
     }
 }

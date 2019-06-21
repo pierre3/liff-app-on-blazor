@@ -33,7 +33,7 @@ namespace LiffSdk.Blazor
         }
     }
     
-    public class LiffClient
+    public class Liff
     {
         protected bool Initialized;
         protected IJSRuntime JSRuntime { get; set; }
@@ -47,7 +47,7 @@ namespace LiffSdk.Blazor
         public event EventHandler<InitSuccessEventArgs> InitSuccess;
         public event EventHandler<LiffClientErrorEventArgs> InitError;
 
-        public LiffClient()
+        public Liff()
         { }
 
         public void Reset()
