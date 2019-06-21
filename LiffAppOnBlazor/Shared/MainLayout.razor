@@ -17,9 +17,18 @@
     </div>
 </div>
 
+
 @functions{
-    protected override Task OnInitAsync()
+    protected override async Task OnInitAsync()
     {
-        return LiffClient.InitializeAsync(JSRuntime);
+        LiffClient.InitSuccess += async (_, data) =>
+        {
+            await LiffClient.LoadProfileAsync();
+        };
+        LiffClient.InitError += async (_, error) =>
+        {
+            await JSRuntime.InvokeAsync<object>("showAlert", error);
+        };
+        await LiffClient.InitializeAsync(JSRuntime);
     }
 }

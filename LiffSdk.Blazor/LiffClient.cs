@@ -4,12 +4,15 @@ using System;
 using LiffSdk.Blazor.Data;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Line.Messaging;
+using System.Collections.Generic;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace LiffSdk.Blazor
 {
     public class LiffClient
     {
-
         protected bool Initialized;
         protected IJSRuntime JSRuntime { get; set; }
 
@@ -18,6 +21,10 @@ namespace LiffSdk.Blazor
         public Profile Profile { get; set; }
 
         public string Error { get; protected set; }
+
+        public event EventHandler<string> InitSuccess;
+
+        public event EventHandler<string> InitError;
 
         public LiffClient()
         { }
@@ -34,12 +41,18 @@ namespace LiffSdk.Blazor
 
         public async Task LoadProfileAsync()
         {
-             Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+            Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
         }
 
-        public async Task SendMessagesAsync(string text)
+        public async Task SendMessagesAsync(IList<ISendMessage> messages)
         {
-            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", $"[ {{ \"type\": \"text\", \"text\": \"{text}\" }} ]");
+            var settings = new JsonSerializerSettings()
+            {
+                ContractResolver = new DefaultContractResolver() { NamingStrategy = new CamelCaseNamingStrategy() }
+            };
+            settings.Converters.Add(new StringEnumConverter() { NamingStrategy = new CamelCaseNamingStrategy() });
+            var json = JsonConvert.SerializeObject(messages, settings);
+            await JSRuntime.InvokeAsync<object>("liffExt.sendMessages", json);
         }
 
         public async Task OpenWindow(string url, bool external)
@@ -53,7 +66,7 @@ namespace LiffSdk.Blazor
         }
 
         [JSInvokable]
-        public void LiffInitSuccess(string data)
+        protected void OnInitSuccess(string data)
         {
             try
             {
@@ -63,12 +76,14 @@ namespace LiffSdk.Blazor
             {
                 Error = e.ToString();
             }
+            InitSuccess?.Invoke(this, data);
         }
 
         [JSInvokable]
-        public void LiffInitError(string error)
+        protected void OnInitError(string error)
         {
-            Error = $"Error: {error}";
+            Error = error;
+            InitError?.Invoke(this, error);
         }
     }
 }
