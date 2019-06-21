@@ -22,22 +22,11 @@
     protected override async Task OnInitAsync()
     {
         LiffClient.InitSuccess += async (_, __) =>
-        {
-            StateHasChanged();
             await LiffClient.LoadProfileAsync();
-        };
+        
         LiffClient.InitError += async (_, args) =>
-        {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
-        };
-        LiffClient.GetProfileSuccess += (_, __) =>
-        {
-            StateHasChanged();
-        };
-        LiffClient.GetProfileError += async (_, args) =>
-        {
-            await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
-        };
+        
         await LiffClient.InitializeAsync(JSRuntime);
     }
 }

@@ -50,8 +50,6 @@ namespace LiffSdk.Blazor
 
         public event EventHandler<InitSuccessEventArgs> InitSuccess;
         public event EventHandler<LiffClientErrorEventArgs> InitError;
-        public event EventHandler<GetProfileSuccessEventArgs> GetProfileSuccess;
-        public event EventHandler<LiffClientErrorEventArgs> GetProfileError;
 
         public LiffClient()
         { }
@@ -73,17 +71,7 @@ namespace LiffSdk.Blazor
 
         public async Task LoadProfileAsync()
         {
-            try
-            {
-                Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
-                GetProfileSuccess?.Invoke(this, new GetProfileSuccessEventArgs(Profile));
-
-            }
-            catch(Exception e)
-            {
-                Error = e.ToString();
-                GetProfileError?.Invoke(this, new LiffClientErrorEventArgs(Error));
-            }
+            Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
         }
 
         public async Task SendMessagesAsync(string messages)
