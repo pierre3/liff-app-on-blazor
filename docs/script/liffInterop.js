@@ -1,11 +1,11 @@
 ﻿window.liffInterop = {
-    init: function (dotNet) {
+    init: function (dotNetRef) {
         liff.init(
             function (data) {
-                dotNet.invokeMethod('OnInitSuccess', JSON.stringify(data));
+                dotNetRef.invokeMethod('OnInitSuccess', JSON.stringify(data));
             },
             function (error) {
-                dotNet.invokeMethod('OnInitError', JSON.stringify({
+                dotNetRef.invokeMethod('OnInitError', JSON.stringify({
                     code: error.code,
                     message: error.message,
                     stack: error.stack
