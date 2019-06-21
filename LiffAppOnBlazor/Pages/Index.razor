@@ -42,7 +42,14 @@
     protected override void OnInit()
     {
         Liff.InitSuccess += async (_, __) =>{
-            await LoadProfileAsync();
+            if(Liff.Profile == null)
+            {
+                await LoadProfileAsync();
+            }
+            else
+            {
+                StateHasChanged();
+            }
         };
         
         Liff.InitError += async (_, args) =>
