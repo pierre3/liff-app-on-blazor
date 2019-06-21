@@ -6,33 +6,6 @@ using System.Threading.Tasks;
 
 namespace LiffSdk.Blazor
 {
-    public class InitSuccessEventArgs : EventArgs
-    {
-        public LiffData Data{get;set;}
-        public InitSuccessEventArgs(LiffData data)
-        {
-            Data = data;
-        }
-    }
-
-    public class LiffClientErrorEventArgs : EventArgs
-    {
-        public string Error { get; set; }
-        public LiffClientErrorEventArgs(string error)
-        {
-            Error = error;
-        }
-    }
-
-    public class GetProfileSuccessEventArgs : EventArgs
-    {
-        public Profile Profile { get; set; }
-        public GetProfileSuccessEventArgs(Profile profile)
-        {
-            Profile = profile;
-        }
-    }
-    
     public class Liff
     {
         protected bool Initialized;
@@ -45,7 +18,7 @@ namespace LiffSdk.Blazor
         public string Error { get; protected set; }
 
         public event EventHandler<InitSuccessEventArgs> InitSuccess;
-        public event EventHandler<LiffClientErrorEventArgs> InitError;
+        public event EventHandler<InitErrorEventArgs> InitError;
 
         public Liff()
         { }
@@ -68,25 +41,17 @@ namespace LiffSdk.Blazor
             await JSRuntime.InvokeAsync<object>("liffInterop.init", DotNetObjectRef.Create(this));
         }
 
-        public async Task LoadProfileAsync()
-        {
-            Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
-        }
+        public async Task LoadProfileAsync() => Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
 
-        public async Task SendMessagesAsync(object messages)
-        {
-            await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
-        }
+        public async Task SendMessagesAsync(object messages) 
+            => await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
 
-        public async Task OpenWindowAsync(string url, bool external)
-        {
-            await JSRuntime.InvokeAsync<object>("liff.openWindow", new { url, external });
-        }
+        public async Task OpenWindowAsync(string url, bool external) 
+            => await JSRuntime.InvokeAsync<object>("liff.openWindow", new { url, external });
 
-        public async Task CloseWindowAsync()
-        {
-            await JSRuntime.InvokeAsync<object>("liff.closeWindow");
-        }
+        public async Task CloseWindowAsync() => await JSRuntime.InvokeAsync<object>("liff.closeWindow");
+
+        public Task<string> GetAccessTokenAsync() => JSRuntime.InvokeAsync<string>("liff.getAccessToken");
 
         [JSInvokable]
         public void OnInitSuccess(string data)
@@ -107,7 +72,7 @@ namespace LiffSdk.Blazor
         public void OnInitError(string error)
         {
             Error = error;
-            InitError?.Invoke(this, new LiffClientErrorEventArgs(Error));
+            InitError?.Invoke(this, new InitErrorEventArgs(Error));
         }
 
     }
