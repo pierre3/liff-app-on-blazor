@@ -13,20 +13,6 @@
             }
         );
     },
-    getProfile: function (dotNet) {
-        liff.getProfile()
-            .then(function (data) {
-                dotNet.invokeMethod('OnGetProfileSuccess', JSON.stringify(data));
-            })
-            .catch(function (error) {
-                dotNet.invokeMethod('OnGetProfileError', JSON.stringify({
-                    code: error.code,
-                    message: error.message,
-                    stack: error.stack
-                }));
-            });
-        
-    },
     alert: function (message) {
         alert(message);
     }
