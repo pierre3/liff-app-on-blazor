@@ -51,7 +51,9 @@
                 await LoadProfileAsync();    
             }else
             {
-                Profile = Liff.Profile; 
+                Profile = Liff.Profile;
+                await JSRuntime.InvokeAsync<object>("liffInterop.alert", "StateHasChanged");
+                StateHasChanged(); 
             }
         };
  
@@ -76,5 +78,7 @@
         }
         Data = Liff.Data;
         Profile = Liff.Profile;
+        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "StateHasChanged");
+        StateHasChanged();
     }
 }
