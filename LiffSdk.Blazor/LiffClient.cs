@@ -80,14 +80,14 @@ namespace LiffSdk.Blazor
         }
 
         [JSInvokable]
-        protected void OnInitError(string error)
+        public void OnInitError(string error)
         {
             Error = error;
             InitError?.Invoke(this, error);
         }
 
         [JSInvokable]
-        protected void OnGetProfileSuccess(string data)
+        public void OnGetProfileSuccess(string data)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace LiffSdk.Blazor
         }
 
         [JSInvokable]
-        protected void OnGetProfileError(string error)
+        public void OnGetProfileError(string error)
         {
             Error = error;
             GetProfileError?.Invoke(this, error);
