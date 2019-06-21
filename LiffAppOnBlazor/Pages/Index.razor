@@ -54,10 +54,7 @@
  
         Liff.InitError += async (_, args) =>
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
-    }
-
-    protected override async Task OnAfterRenderAsync()
-    {
+        
         await Liff.InitializeAsync(JSRuntime);
     }
 
