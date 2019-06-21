@@ -14,7 +14,7 @@
         if (!string.IsNullOrEmpty(Message))
         {
             try {
-                await LiffClient.SendMessagesAsync($"[{{ \"type\":\"text\", \"text\":\"{Message}\" }}]");
+                await LiffClient.SendMessagesAsync(new[] { new { type = "text", text = Message } });
                 Message = "";
             } catch(Exception e)
             {

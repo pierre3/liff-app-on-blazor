@@ -74,7 +74,7 @@ namespace LiffSdk.Blazor
             Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
         }
 
-        public async Task SendMessagesAsync(string messages)
+        public async Task SendMessagesAsync(object messages)
         {
             await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
         }
