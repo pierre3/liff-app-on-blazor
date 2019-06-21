@@ -41,8 +41,9 @@
     LiffData Data { get; set;}
     Profile Profile { get; set;}
 
-    protected override void OnInit()
+    protected override async Task OnInitAsync()
     {
+        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "OnInitAsync");
         Liff.InitSuccess += async (_, __) =>
         {
             Data = Liff.Data;
@@ -59,6 +60,7 @@
 
     protected override async Task OnAfterRenderAsync()
     {
+        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "OnAfterRenderAsync");
         await Liff.InitializeAsync(JSRuntime);
     }
 
