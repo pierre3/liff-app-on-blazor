@@ -46,15 +46,11 @@
         Liff.InitSuccess += async (_, __) =>
         {
             Data = Liff.Data;
-            if(Liff.Profile == null)
-            {
-                await LoadProfileAsync();    
-            }else
-            {
-                Profile = Liff.Profile;
-                await JSRuntime.InvokeAsync<object>("liffInterop.alert", "StateHasChanged");
-                StateHasChanged(); 
-            }
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Data updated!");
+            StateHasChanged();            
+            
+            await LoadProfileAsync();    
+            
         };
  
         Liff.InitError += async (_, args) =>
@@ -78,7 +74,7 @@
         }
         Data = Liff.Data;
         Profile = Liff.Profile;
-        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "StateHasChanged");
+        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Profile updated!");
         StateHasChanged();
     }
 }
