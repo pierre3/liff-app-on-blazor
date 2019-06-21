@@ -1,8 +1,4 @@
-﻿using LiffSdk.Blazor.Data;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace LiffSdk.Blazor
 {

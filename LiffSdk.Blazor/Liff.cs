@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace LiffSdk.Blazor
 {
-    public class Liff
+    public class Liff : ILiff
     {
-        protected bool Initialized;
+        public bool Initialized { get; protected set; }
         protected IJSRuntime JSRuntime { get; set; }
 
         public LiffData Data { get; protected set; }
 
-        public Profile Profile { get; set; }
+        public Profile Profile { get; protected set; }
 
         public string Error { get; protected set; }
 
@@ -41,17 +41,20 @@ namespace LiffSdk.Blazor
             await JSRuntime.InvokeAsync<object>("liffInterop.init", DotNetObjectRef.Create(this));
         }
 
-        public async Task LoadProfileAsync() => Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
+        public async Task LoadProfileAsync()
+            => Profile = await JSRuntime.InvokeAsync<Profile>("liff.getProfile");
 
-        public async Task SendMessagesAsync(object messages) 
+        public async Task SendMessagesAsync(object messages)
             => await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
 
-        public async Task OpenWindowAsync(string url, bool external) 
+        public async Task OpenWindowAsync(string url, bool external)
             => await JSRuntime.InvokeAsync<object>("liff.openWindow", new { url, external });
 
-        public async Task CloseWindowAsync() => await JSRuntime.InvokeAsync<object>("liff.closeWindow");
+        public async Task CloseWindowAsync()
+            => await JSRuntime.InvokeAsync<object>("liff.closeWindow");
 
-        public Task<string> GetAccessTokenAsync() => JSRuntime.InvokeAsync<string>("liff.getAccessToken");
+        public Task<string> GetAccessTokenAsync()
+            => JSRuntime.InvokeAsync<string>("liff.getAccessToken");
 
         [JSInvokable]
         public void OnInitSuccess(string data)

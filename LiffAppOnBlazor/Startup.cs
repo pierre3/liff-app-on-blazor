@@ -8,7 +8,7 @@ namespace LiffAppOnBlazor
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<Liff>();
+            services.AddSingleton<ILiff>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
