@@ -59,7 +59,7 @@
         try
         {
             await LiffClient.LoadProfileAsync();
-            await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Set profile Success!");
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Get profile Success!");
         }
         catch (Exception e)
         {

@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LiffSdk.Blazor.Data;
 using Microsoft.JSInterop;
-using System;
-using LiffSdk.Blazor.Data;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
+using System;
+using System.Threading.Tasks;
 
 namespace LiffSdk.Blazor
 {
@@ -90,18 +86,18 @@ namespace LiffSdk.Blazor
         }
 
         [JSInvokable]
-        protected void OnInitSuccess(string data)
+        public void OnInitSuccess(string data)
         {
             try
             {
                 Data = JsonConvert.DeserializeObject<LiffData>(data);
+                Initialized = true;
+                InitSuccess?.Invoke(this, new InitSuccessEventArgs(Data));
             }
             catch (Exception e)
             {
                 Error = e.ToString();
             }
-            Initialized = true;
-            InitSuccess?.Invoke(this, new InitSuccessEventArgs(Data));
         }
 
         [JSInvokable]
