@@ -63,7 +63,6 @@ namespace LiffSdk.Blazor
             JSRuntime = jSRuntime;
             if (Initialized)
             {
-                InitSuccess?.Invoke(this, new InitSuccessEventArgs(Data));
                 return;
             }
             await JSRuntime.InvokeAsync<object>("liffInterop.init", DotNetObjectRef.Create(this));
