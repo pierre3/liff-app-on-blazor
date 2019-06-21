@@ -30,7 +30,7 @@
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", error);
         };
-        LiffClient.GetProfileSuccess += async (_, error) =>
+        LiffClient.GetProfileSuccess += (_, error) =>
         {
             StateHasChanged();
         };
