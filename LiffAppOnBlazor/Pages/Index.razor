@@ -5,17 +5,17 @@
 <div class="card" style="width: 20rem;">
     @if (Profile != null)
     {
-        <img class="card-img" src="@Profile?.PictureUrl" />
-        <div class="card-body">
-            <h5 class="card-title">@Profile?.DisplayName</h5>
-            <p class="card-text">@Profile?.StatusMessage</p>
-        </div>
+    <img class="card-img" src="@Profile?.PictureUrl" />
+    <div class="card-body">
+        <h5 class="card-title">@Profile?.DisplayName</h5>
+        <p class="card-text">@Profile?.StatusMessage</p>
+    </div>
     }
     else
     {
-        <div class="card-body">
-            <button class="btn btn-info" onclick="@LoadProfileAsync">プロファイル読み込み</button>
-        </div>
+    <div class="card-body">
+        <button class="btn btn-info" onclick="@LoadProfileAsync">プロファイル読み込み</button>
+    </div>
     }
     <ul class="list-group">
         <li class="list-group-item">Language: @Data?.Language</li>
@@ -24,15 +24,15 @@
         <li class="list-group-item">UserId: @Data?.Context.UserId</li>
         @if (@Data?.Context.Type == ContextType.Utou)
         {
-            <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
+        <li class="list-group-item">UtouId: @Data?.Context.UtouId</li>
         }
         else if (@Data?.Context.Type == ContextType.Room)
         {
-            <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
+        <li class="list-group-item">RoomId: @Data?.Context.RoomId</li>
         }
         else if (@Data?.Context.Type == ContextType.Group)
         {
-            <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
+        <li class="list-group-item">GroupId: @Data?.Context.GroupId</li>
         }
     </ul>
 </div>
@@ -41,13 +41,21 @@
     LiffData Data { get; set; }
     Profile Profile { get; set; }
 
-    protected override void OnInit()
+    protected override async Task OnInitAsync()
     {
-        Data = LiffClient?.Data;
-        Profile = LiffClient?.Profile;
+        LiffClient.InitSuccess += async (_, __) =>{
+            await LoadProfileAsync();
+            Data = LiffClient?.Data;
+            Profile = LiffClient?.Profile;
+        };
+        
+        LiffClient.InitError += async (_, args) =>
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
+
+        await LiffClient.InitializeAsync(JSRuntime);
     }
 
-    private async void LoadProfileAsync()
+    private async Task LoadProfileAsync()
     {
         try
         {
@@ -57,7 +65,5 @@
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
         }
-        Data = LiffClient?.Data;
-        Profile = LiffClient?.Profile;
     }
 }

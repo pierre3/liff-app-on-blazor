@@ -1,7 +1,4 @@
 @inherits LayoutComponentBase
-@inject LiffClient LiffClient
-@inject IJSRuntime JSRuntime
-
 
 <div class="sidebar">
     <NavMenu />
@@ -16,17 +13,3 @@
         @Body
     </div>
 </div>
-
-
-@functions{
-    protected override async Task OnInitAsync()
-    {
-        LiffClient.InitSuccess += async (_, __) =>
-            await LiffClient.LoadProfileAsync();
-        
-        LiffClient.InitError += async (_, args) =>
-            await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
-        
-        await LiffClient.InitializeAsync(JSRuntime);
-    }
-}
