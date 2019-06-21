@@ -78,12 +78,12 @@ namespace LiffSdk.Blazor
             await JSRuntime.InvokeAsync<object>("liff.sendMessages", messages);
         }
 
-        public async Task OpenWindow(string url, bool external)
+        public async Task OpenWindowAsync(string url, bool external)
         {
             await JSRuntime.InvokeAsync<object>("liff.openWindow", new { url, external });
         }
 
-        public async Task CloseWindow()
+        public async Task CloseWindowAsync()
         {
             await JSRuntime.InvokeAsync<object>("liff.closeWindow");
         }
