@@ -43,13 +43,11 @@
 
     protected override async Task OnInitAsync()
     {
-        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "OnInitAsync");
+        Update();
+        
         Liff.InitSuccess += async (_, __) =>
         {
-            Data = Liff.Data;
-            await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Data updated!");
-            StateHasChanged();            
-            
+            Update();
             await LoadProfileAsync();    
             
         };
@@ -60,7 +58,6 @@
 
     protected override async Task OnAfterRenderAsync()
     {
-        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "OnAfterRenderAsync");
         await Liff.InitializeAsync(JSRuntime);
     }
 
@@ -74,9 +71,13 @@
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
         }
+        Update();
+    }
+
+    private void Update()
+    {
         Data = Liff.Data;
         Profile = Liff.Profile;
-        await JSRuntime.InvokeAsync<object>("liffInterop.alert", "Profile updated!");
         StateHasChanged();
     }
 }
