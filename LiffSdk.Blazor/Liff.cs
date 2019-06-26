@@ -28,7 +28,8 @@ namespace LiffSdk.Blazor
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
-            Data = await JSRuntime.InvokeAsync<LiffData>("liffInterop.init");
+            var json = await JSRuntime.InvokeAsync<string>("liffInterop.init");
+            Data = JsonConvert.DeserializeObject<LiffData>(json);
             Initialized = true;
         }
 
