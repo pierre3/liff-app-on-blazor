@@ -41,15 +41,10 @@
 
     protected override async Task OnInitAsync()
     {
-        await InitializeAsync();
-        await LoadProfileAsync();
-    }
-
-    private async Task InitializeAsync()
-    {
         try
         {
             await Liff.InitializeAsync(JSRuntime);
+            await Liff.LoadProfileAsync();
             StateHasChanged();
         }
         catch (Exception e)
