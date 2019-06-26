@@ -28,11 +28,8 @@ namespace LiffSdk.Blazor
         public async Task InitializeAsync(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
-            if (Initialized)
-            {
-                return;
-            }
             Data = await JSRuntime.InvokeAsync<LiffData>("liffInterop.init");
+            Initialized = true;
         }
 
         public async Task LoadProfileAsync()

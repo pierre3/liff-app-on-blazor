@@ -50,6 +50,7 @@
         }
         await InitializeAsync();
         await LoadProfileAsync();
+        Update();
     }
 
     private async Task InitializeAsync()
@@ -74,7 +75,6 @@
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
         }
-        Update();
     }
 
     private void Update()
