@@ -41,7 +41,7 @@
     LiffData Data { get; set;}
     Profile Profile { get; set;}
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnAfterRenderAsync()
     {
         if (Liff.Initialized)
         {
@@ -50,7 +50,6 @@
         }
         await InitializeAsync();
         await LoadProfileAsync();
-        Update();
     }
 
     private async Task InitializeAsync()
@@ -75,12 +74,16 @@
         {
             await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
         }
+        Update();
     }
 
     private void Update()
     {
-        Data = Liff.Data;
-        Profile = Liff.Profile;
-        StateHasChanged();
+        if (Data == null || Profile == null)
+        {
+            Data = Liff.Data;
+            Profile = Liff.Profile;
+            StateHasChanged();
+        }
     }
 }
