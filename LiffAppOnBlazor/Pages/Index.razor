@@ -5,7 +5,7 @@
 <div class="card" style="width: 20rem;">
     @if (Liff.Profile != null)
     {
-    <img class="card-img" src="@Liff.Profile?.PictureUrl" />
+    <img class="card-img" src="@Liff.Profile?.PictureUrl" alt="Loading image..." onload="@StateHasChanged" />
     <div class="card-body">
         <h5 class="card-title">@Liff.Profile?.DisplayName</h5>
         <p class="card-text">@Liff.Profile?.StatusMessage</p>
