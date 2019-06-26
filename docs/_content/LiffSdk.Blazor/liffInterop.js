@@ -3,6 +3,7 @@
         return new Promise(function (resolve, reject) {
             liff.init(
                 function (data) {
+                    alert(JSON.stringify(data));
                     resolve(data);
                 },
                 function (error) {
