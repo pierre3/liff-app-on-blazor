@@ -33,7 +33,7 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<ILiff>();
+        services.AddSingleton<ILiff, Liff>();
     }
 
     public void Configure(IComponentsApplicationBuilder app)
