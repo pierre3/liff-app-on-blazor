@@ -11,12 +11,12 @@ namespace LiffSdk.Blazor
         LiffData Data { get; }
         Profile Profile { get; }
 
-        Task CloseWindowAsync();
-        Task<string> GetAccessTokenAsync();
         Task InitializeAsync(IJSRuntime jSRuntime);
         Task LoadProfileAsync();
+        Task<string> GetAccessTokenAsync();
+        Task SendMessagesAsync(object messages);
+        Task CloseWindowAsync();
         Task OpenWindowAsync(string url, bool external);
         void Reset();
-        Task SendMessagesAsync(object messages);
     }
 }
