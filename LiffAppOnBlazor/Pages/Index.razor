@@ -43,19 +43,25 @@
 
     protected override async Task OnInitAsync()
     {
-        Update();
-        
-        Liff.InitSuccess += async (_, __) =>
+        if (Liff.Initialized)
         {
             Update();
-            await LoadProfileAsync();    
-            
-        };
- 
-        Liff.InitError += async (_, args) =>
-            await JSRuntime.InvokeAsync<object>("liffInterop.alert", args.Error);
-        
-        await Liff.InitializeAsync(JSRuntime);
+            return;
+        }
+        await InitializeAsync();
+        await LoadProfileAsync();
+    }
+
+    private async Task InitializeAsync()
+    {
+        try
+        {
+            await Liff.InitializeAsync(JSRuntime);
+        }
+        catch (Exception e)
+        {
+            await JSRuntime.InvokeAsync<object>("liffInterop.alert", e.ToString());
+        }
     }
 
     private async Task LoadProfileAsync()

@@ -9,11 +9,7 @@ namespace LiffSdk.Blazor
     {
         bool Initialized { get; }
         LiffData Data { get; }
-        string Error { get; }
         Profile Profile { get; }
-
-        event EventHandler<InitErrorEventArgs> InitError;
-        event EventHandler<InitSuccessEventArgs> InitSuccess;
 
         Task CloseWindowAsync();
         Task<string> GetAccessTokenAsync();

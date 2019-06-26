@@ -15,11 +15,6 @@ namespace LiffSdk.Blazor
 
         public Profile Profile { get; protected set; }
 
-        public string Error { get; protected set; }
-
-        public event EventHandler<InitSuccessEventArgs> InitSuccess;
-        public event EventHandler<InitErrorEventArgs> InitError;
-
         public Liff()
         { }
 
@@ -27,7 +22,6 @@ namespace LiffSdk.Blazor
         {
             Data = null;
             Profile = null;
-            Error = null;
             Initialized = false;
         }
 
@@ -38,7 +32,7 @@ namespace LiffSdk.Blazor
             {
                 return;
             }
-            await JSRuntime.InvokeAsync<object>("liffInterop.init", DotNetObjectRef.Create(this));
+            Data = await JSRuntime.InvokeAsync<LiffData>("liffInterop.init");
         }
 
         public async Task LoadProfileAsync()
@@ -55,28 +49,6 @@ namespace LiffSdk.Blazor
 
         public Task<string> GetAccessTokenAsync()
             => JSRuntime.InvokeAsync<string>("liff.getAccessToken");
-
-        [JSInvokable]
-        public void OnInitSuccess(string data)
-        {
-            try
-            {
-                Data = JsonConvert.DeserializeObject<LiffData>(data);
-                Initialized = true;
-                InitSuccess?.Invoke(this, new InitSuccessEventArgs(Data));
-            }
-            catch (Exception e)
-            {
-                Error = e.ToString();
-            }
-        }
-
-        [JSInvokable]
-        public void OnInitError(string error)
-        {
-            Error = error;
-            InitError?.Invoke(this, new InitErrorEventArgs(Error));
-        }
 
     }
 }

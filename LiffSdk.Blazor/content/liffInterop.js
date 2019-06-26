@@ -1,17 +1,14 @@
 ﻿window.liffInterop = {
-    init: function (dotNetRef) {
-        liff.init(
-            function (data) {
-                dotNetRef.invokeMethod('OnInitSuccess', JSON.stringify(data));
-            },
-            function (error) {
-                dotNetRef.invokeMethod('OnInitError', JSON.stringify({
-                    code: error.code,
-                    message: error.message,
-                    stack: error.stack
-                }));
-            }
-        );
+    init: function () {
+        return new Promise(function (resolve, reject) {
+            liff.init(
+                function (data) {
+                    resolve(data);
+                },
+                function (error) {
+                    reject(error);
+                });
+        });
     },
     alert: function (message) {
         alert(message);
